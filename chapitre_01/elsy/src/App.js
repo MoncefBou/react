@@ -13,7 +13,12 @@ class App extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className="container-fluid">
+        <div className="row">
+      <p>Heart : {heartMin}</p>
+      <p>Temperature : {tempMin}</p>
+      <p>Steps : {stepsMin}</p>
+        </div>
 
       </div>
     );
