@@ -1,4 +1,5 @@
 import React from "react";
+import "./Team.css";
 
 
 class Team extends React.Component {
@@ -6,24 +7,26 @@ class Team extends React.Component {
     constructor(props) {
         super(props)
 
-        
+        this.state = {
+            points: this.props.points,
+            matchs: 5
+        };
+
     }
 
     render() {
 
         return (
-            <div>
-                <h2 style ={{
+            <div className ='box'>
+                <h2 style={{
                     color: this.props.color,
-                    backgroundColor: 'black',
                     paddingLeft: '5px'
                 }}>{this.props.name}</h2>
 
-                <p><strong>Amount of points : {this.props.points}</strong></p>
-                <p><strong>Number of matches : {this.props.points}</strong></p>
+                <p><strong>Amount of points : {this.state.points}</strong></p>
+                <p><strong>Number of matches : {this.state.matchs}</strong></p>
 
-
-                <button>Add 1 point</button>
+                <button onClick={() => this.setState({ points: this.state.points + 1 })}>Add 1 point</button>
             </div>
         )
     }
