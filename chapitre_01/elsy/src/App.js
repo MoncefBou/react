@@ -12,6 +12,56 @@ const stepsMax = 50000;
 
 class App extends React.Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      water: 1.5,
+      heart: 120,
+      temperature: -10,
+      steps: 3000
+    }
+
+    this.onHeartChange = this.onHeartChange.bind(this);
+    this.onTemperatureChange = this.onTemperatureChange.bind(this);
+    this.onStepsChange = this.onStepsChange.bind(this);
+    this.calculateWater = this.calculateWater.bind(this);
+
+  }
+
+  onHeartChange(value) {
+
+    this.setState({ heart: value })
+    this.calculateWater()
+  };
+
+  onTemperatureChange(value) {
+
+    this.setState({ temperature: value })
+    this.calculateWater()
+  };
+
+  onStepsChange(value) {
+
+    this.setState({ steps: value })
+    this.calculateWater()
+  };
+
+  calculateWater() {
+    if ( this.state.temperature > 20) {
+      this.setState({ water: this.state.water + ((this.state.temperature - 20) * 0.02)})
+    }
+
+    if ( this.state.heart > 120 ) {
+      this.setState({ water: this.state.water + ((this.state.heart - 120) * 0.0008)})
+    }
+
+    if ( this.state.steps > 10000 ) {
+      this.setState({ water: this.state.water + ((this.state.steps - 10000) * 0.00002)})
+    }
+
+  }
+
   render() {
 
     return (
@@ -20,16 +70,16 @@ class App extends React.Component {
         <div className="row">
 
           {/* WATER */}
-          <Box icon="local_drink" color="#3A85FF" value={1.5} unit="L" />
+          <Box icon="local_drink" color="#3A85FF" value={this.state.water} unit="L" />
 
           {/* STEPS */}
-          <Box icon="directions_walk" color="black" value={3000} unit="steps"/>
+          <Box min={stepsMin} max={stepsMax} onChange={this.onStepsChange} icon="directions_walk" color="black" value={this.state.steps} unit="steps" />
 
           {/* HEART */}
-          <Box icon="favorite" color="red" value={120} unit="bpm"/>
+          <Box min={heartMin} max={heartMax} onChange={this.onHeartChange} icon="favorite" color="red" value={this.state.heart} unit="bpm" />
 
           {/* TEMPERATURE */}
-          <Box icon="wb_sunny" color="yellow" value={-10} unit="°C"/>
+          <Box min={tempMin} max={tempMax} onChange={this.onTemperatureChange} icon="wb_sunny" color="yellow" value={this.state.temperature} unit="°C" />
 
           <p>Heart : {heartMin}</p>
           <p>Temperature : {tempMin}</p>
