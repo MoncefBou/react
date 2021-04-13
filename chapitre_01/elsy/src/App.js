@@ -26,6 +26,8 @@ class App extends React.Component {
     this.onTemperatureChange = this.onTemperatureChange.bind(this);
     this.onStepsChange = this.onStepsChange.bind(this);
     this.calculateWater = this.calculateWater.bind(this);
+    this.plusSteps = this.plusSteps.bind(this);
+    this.minusSteps = this.minusSteps.bind(this);
 
   }
 
@@ -48,18 +50,37 @@ class App extends React.Component {
   };
 
   calculateWater() {
-    if ( this.state.temperature > 20) {
-      this.setState({ water: this.state.water + ((this.state.temperature - 20) * 0.02)})
+    let tempWater = 0;
+    let heartWater = 0;
+    let stepsWater = 0;
+
+    if (this.state.temperature > 20) {
+      tempWater = (this.state.temperature - 20) * 0.02;
     }
 
-    if ( this.state.heart > 120 ) {
-      this.setState({ water: this.state.water + ((this.state.heart - 120) * 0.0008)})
+    if (this.state.heart > 120) {
+      heartWater = (this.state.heart - 120) * 0.0008;
     }
 
-    if ( this.state.steps > 10000 ) {
-      this.setState({ water: this.state.water + ((this.state.steps - 10000) * 0.00002)})
+    if (this.state.steps > 10000) {
+      stepsWater = (this.state.steps - 10000) * 0.00002;
     }
 
+    this.setState({ water: (1.5 + tempWater + heartWater + stepsWater).toFixed(2) });
+  }
+
+  plusSteps() {
+    if(this.state.steps <= 49000) {
+      this.setState({steps: this.state.steps + 1000})
+      this.calculateWater()
+    }
+  }
+
+  minusSteps() {
+    if(this.state.steps >= 1000) {
+      this.setState({steps: this.state.steps - 1000})
+      this.calculateWater()
+    }
   }
 
   render() {
@@ -73,7 +94,7 @@ class App extends React.Component {
           <Box icon="local_drink" color="#3A85FF" value={this.state.water} unit="L" />
 
           {/* STEPS */}
-          <Box min={stepsMin} max={stepsMax} onChange={this.onStepsChange} icon="directions_walk" color="black" value={this.state.steps} unit="steps" />
+          <Box min={stepsMin} max={stepsMax} onClickMinus={this.minusSteps} onClickPlus={this.plusSteps} icon="directions_walk" color="black" value={this.state.steps} unit="steps" />
 
           {/* HEART */}
           <Box min={heartMin} max={heartMax} onChange={this.onHeartChange} icon="favorite" color="red" value={this.state.heart} unit="bpm" />
