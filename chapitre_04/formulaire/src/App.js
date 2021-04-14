@@ -37,7 +37,6 @@ class App extends React.Component {
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email address</label>
           <input placeholder="Enter email..." onInput={(e) => this.myFunc(e)} type="email" className="form-control is-valid" id="exampleInputEmail1" aria-describedby="emailHelp"></input>
-          {console.log("if si c'est bon", this.state.value)}
         </div>
       )
 
@@ -46,7 +45,6 @@ class App extends React.Component {
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email address</label>
           <input placeholder="Enter email..." onInput={(e) => this.myFunc(e)} type="email" className="form-control is-invalid" id="exampleInputEmail1" aria-describedby="emailHelp"></input>
-          {console.log("if si c'est pas bon", this.state.value)}
         </div>
       )
 
@@ -84,8 +82,8 @@ class App extends React.Component {
 
 
       return (
-        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-          <p classe="h1" style={{ fontSize: 40 }}>Login</p>
+        <div className="d-flex flex-column align-items-center">
+          <p classeName="h1 mb-4" style={{ fontSize: 40, fontWeight: "initial" }}>Login</p>
           <form style={{ width: 500 }}>
 
             {this.renderValidationEmail()}
@@ -102,7 +100,14 @@ class App extends React.Component {
         </div>
       )
     } else {
-      return <h1> Fini</h1>
+      return (
+        <div className="d-flex flex-column align-items-center">
+          <p className="h1 mt-2 mb-4" style={{ fontSize: 40, fontWeight: "initial"}}>Login</p>
+          <div className="d-flex justify-content-center align-items-center" style={{ width: '450px', height: '200px', backgroundColor: '#eaeaea' }}>
+          <h2 style={{ fontSize: '40px', color: 'black'}}>Form submitted</h2>
+          </div>
+        </div>
+      )
     }
   }
 }
