@@ -23,7 +23,7 @@ class List extends React.Component {
                     </li>
                     )}</ul>
 
-                    <button type="button" className=" align-self-end mt-2 btn btn-outline-secondary" style={{position: "right"}} >Delete</button>
+                    <button onClick={this.props.deleteFunc} type="button" className=" align-self-end mt-2 btn btn-outline-secondary" style={{position: "right"}} >Delete</button>
                 </div>
             )
         }

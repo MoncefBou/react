@@ -21,6 +21,7 @@ class App extends React.Component {
     this.selectList = this.selectList.bind(this);
     this.selectPay = this.selectPay.bind(this);
     this.addItem = this.addItem.bind(this);
+    this.deleteFunc = this.deleteFunc.bind(this);
   }
 
   selectAdd() {
@@ -48,6 +49,14 @@ class App extends React.Component {
     this.selectList()
   }
 
+  deleteFunc() {
+    const arrayItems = this.state.items;
+
+    arrayItems.pop()
+    
+    this.setState({ items: arrayItems});
+  }
+
   renderViews() {
     if (this.state.activeTab === "add") {
       return (
@@ -58,7 +67,7 @@ class App extends React.Component {
     } else if (this.state.activeTab === "list") {
       return (
         <section>
-          <List items={this.state.items} />
+          <List deleteFunc={this.deleteFunc} items={this.state.items} />
         </section>
       )
     } else {
