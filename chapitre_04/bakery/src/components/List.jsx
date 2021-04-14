@@ -8,6 +8,8 @@ class List extends React.Component {
         return(
             <div>
                 <p>List</p>
+
+                <ul>{this.props.items.map((key) => <li>{key.name} {key.price}</li>)}</ul>
             </div>
         )
     }
