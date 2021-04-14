@@ -3,13 +3,25 @@ import React from 'react';
 
 class Button extends React.Component {
 
-    render() {
+    rendActive() {
 
-        return(
-            <div>
-                <button className="btn btn-outline-primary" isSelected={this.props.isSelected} onClick={this.props.onClick}>{this.props.children}</button>
-            </div>
-        )
+    }
+
+    render() {
+        if (this.props.isSelected === this.props.children.toLowerCase()) {
+            return (
+                <div>
+                    <button style={{ backgroundColor: '#007bff', color: 'white' }} className="btn btn-outline-primary" onClick={this.props.onClick}>{this.props.children}</button>
+                </div>
+            )
+        } else {
+
+            return (
+                <div>
+                    <button className="btn btn-outline-primary" onClick={this.props.onClick}>{this.props.children}</button>
+                </div>
+            )
+        }
     }
 }
 

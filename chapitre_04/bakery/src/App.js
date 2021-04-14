@@ -45,7 +45,7 @@ class App extends React.Component {
     updateItems.push(newItem);
 
     this.setState({ items: updateItems });
-    console.log(this.state.items);
+    this.selectList()
   }
 
   renderViews() {
