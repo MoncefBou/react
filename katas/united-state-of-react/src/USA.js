@@ -1,3 +1,9 @@
+// Katas sur codewars : https://www.codewars.com/kata/5a830fa2373c2ec8eb00019d
+// J'en ai fait qu'un finalement parce que j'ai eu plein de soucis, j'ai pas compris comment fallait le tester
+// Mais je l'ai pimpé un peu, j'ai rajouté des bouttons et tout mdr...
+
+
+
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './USA.css';
