@@ -73,7 +73,7 @@ class App extends React.Component {
     } else {
       return (
         <section>
-          <Pay />
+          <Pay items={this.state.items} />
         </section>
       )
     }
@@ -88,6 +88,7 @@ class App extends React.Component {
         <div className="d-flex flex-column" style={{width:600}}>
 
           <h1 className="h1" style={{textAlign: 'center'}}>Bakery</h1>
+
           <div className="d-flex flex-row justify-content-start">
             <Button isSelected={this.state.activeTab} onClick={this.selectAdd} >Add</Button>
             <Button isSelected={this.state.activeTab} onClick={this.selectList} >List</Button>

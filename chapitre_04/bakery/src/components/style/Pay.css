@@ -1,0 +1,16 @@
+.allTotal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.allTotal span {
+    padding-bottom: 20px;
+}
+
+.theCard {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
