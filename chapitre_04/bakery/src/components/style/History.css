@@ -1,0 +1,28 @@
+.historyList {
+    margin-bottom: 0;
+    color: white;
+}
+
+.historyBox {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    padding: 1em;
+    border-radius: 10px;
+    background-color: #057bff;
+    box-shadow: 2px 2px 8px 0px #00000047;
+    width: 70%;
+
+}
+
+
+.historyTotal {
+    align-self: flex-end;
+    margin-bottom: 0;
+    color: white;
+}
+
+.historyBody {
+    display: flex;
+    flex-direction: column;
+}

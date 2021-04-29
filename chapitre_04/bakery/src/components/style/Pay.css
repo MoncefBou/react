@@ -14,3 +14,18 @@
     flex-wrap: wrap;
     margin-top: 10px;
 }
+
+.listBasket {
+    font-size: 15px;
+    margin-bottom: 1vh;
+    margin-top: 1vh;
+}
+
+.payTitle {
+    margin-left: 2vh;
+}
+
+.buttonPay {
+    display: flex;
+    justify-content: space-between;
+}

@@ -22,6 +22,8 @@ class Pay extends React.Component {
 
     clear() {
         this.setState({
+            basket: [],
+
             total: 0,
             totalTVA: 0,
             totalEcoTax: 0,
@@ -31,34 +33,64 @@ class Pay extends React.Component {
 
     handleSelect(name, price) {
 
-        console.log('name:', name, 'price:', price)
         const newBasket = this.state.basket
         let newAdd = {
             name: name,
-            price: price
+            price: price,
+            count: 1
         }
-
-        newBasket.push(newAdd);
 
         let newTotal = this.state.total + parseInt(price);
         let newTotalEcoTax = this.state.totalEcoTax + 0.3;
-        console.log('price', price)
-        console.log('newTotal', newTotal)
-        this.setState({
-            basket: newBasket,
-            total: newTotal,
-            totalEcoTax: newTotalEcoTax,
-            totalTVA: newTotal * 0.20,
-            totalTTC: newTotal * 1.20
-        })
+
+        const testBasket = newBasket.filter(elem => elem.name === newAdd.name)
+
+        if (testBasket.length === 0) {
+
+            newBasket.push(newAdd);
+
+            this.setState({
+                basket: newBasket,
+                total: newTotal,
+                totalEcoTax: newTotalEcoTax,
+                totalTVA: newTotal * 0.20,
+                totalTTC: newTotal * 1.20
+            })
+        } else {
+
+            newBasket.forEach(elem => {
+                if (elem.name === newAdd.name) {
+                    elem.count++
+                }
+            });
+
+            this.setState({
+                basket: newBasket,
+                total: newTotal,
+                totalEcoTax: newTotalEcoTax,
+                totalTVA: newTotal * 0.20,
+                totalTTC: newTotal * 1.20
+            })
+        }
     }
 
     render() {
 
-        return (
+        if (this.props.items.length === 0) {
+            return (
+                <div className="mt-2">
+                    <span className="h1" style={{ fontSize: 30 }}>No items are available</span>
+                </div>
+            )
+        } else if (this.state.total === 0 && this.props.items.length > 0) {
+            return (
+                <div>
+                <p className="h3 mt-3 payTitle">Pay</p>
 
-            <div>
-                <p>Pay</p>
+                {this.state.basket.map(elem => {
+                    return <p className="listBasket">{elem.name} x {elem.count}</p>
+                })}
+
                 <div className="allTotal">
                     <span>SubTotal: {this.state.total.toFixed(2)} €</span>
                     <span>VAT: {this.state.totalTVA.toFixed(2)} €</span>
@@ -71,13 +103,43 @@ class Pay extends React.Component {
                     }))}
                 </div>
 
-                <div>
-                    <p>{this.state.total}</p>
-                </div>
+                <div className="buttonPay">
+                    <button onClick={this.clear} type="button" className=" align-self-end mt-2 btn btn-outline-secondary" >Clear</button>
 
-                <button onClick={this.clear}>Clear</button>
+                    <button onClick={() => this.props.save(this.state.basket, this.state.totalTTC)} type="button" className="btn mt-2 btn-outline-success" disabled>Save</button>
+                </div>
             </div>
-        )
+            )
+        } else {
+            return (
+
+                <div>
+                    <p className="h3 mt-3 payTitle">Pay</p>
+
+                    {this.state.basket.map(elem => {
+                        return <p className="listBasket">{elem.name} x {elem.count}</p>
+                    })}
+
+                    <div className="allTotal">
+                        <span>SubTotal: {this.state.total.toFixed(2)} €</span>
+                        <span>VAT: {this.state.totalTVA.toFixed(2)} €</span>
+                        <span>Eco tax: {this.state.totalEcoTax.toFixed(2)} €</span>
+                        <span><strong>Total: {this.state.totalTTC.toFixed(2)} €</strong></span>
+                    </div>
+                    <div className="theCard">
+                        {this.props.items.map((elem => {
+                            return <Card itemName={elem.name} price={elem.price} onClick={this.handleSelect} />
+                        }))}
+                    </div>
+
+                    <div className="buttonPay">
+                        <button onClick={this.clear} type="button" className=" align-self-end mt-2 btn btn-outline-secondary" >Clear</button>
+
+                        <button onClick={() => this.props.save(this.state.basket, this.state.totalTTC)} type="button" className="btn mt-2 btn-outline-success">Save</button>
+                    </div>
+                </div>
+            )
+        }
     }
 }
 
