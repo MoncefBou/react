@@ -2,6 +2,7 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Button from "./components/Button";
+import Card from "./components/Card";
 
 class App extends React.Component {
 
@@ -20,10 +21,10 @@ class App extends React.Component {
   }
 
   getCountry(country) {
-    fetch(`https://restcountries.eu/rest/v2/name/${country.toLowerCase()}`)
+    fetch(`http://localhost:8000/countries/${country.toLowerCase()}`)
       .then(res => res.json())
       .then(result => {
-        
+
         this.setState({
           name: result[0].name,
           capital: result[0].capital,
@@ -54,7 +55,7 @@ class App extends React.Component {
   buttonRender() {
 
     return (
-      <div>
+      <div style={{ width: 350 }} className="d-flex justify-content-between mb-4 mt-4">
         <Button onClick={this.getCountry}>France</Button>
         <Button onClick={this.getCountry} >Brazil</Button>
         <Button onClick={this.getCountry} >Croatia</Button>
@@ -62,20 +63,34 @@ class App extends React.Component {
     )
   }
 
-  render() {
-
+  cardRender() {
 
     return (
-      <div className="d-flex flex-column">
-        <span>name : {this.state.name}</span>
-        <span>capital : {this.state.capital}</span>
-        <span>flag : {this.state.flag}</span>
-        <span>population : {this.state.population}</span>
-        <span>region : {this.state.region}</span>
+      <div>
+        <Card name={this.state.name} capital={this.state.capital} flag={this.state.flag} population={this.state.population} region={this.state.region} />
+      </div>
+    )
+  }
 
-        {this.buttonRender()}
+  render() {
 
-        
+    return (
+      <div>
+
+        <div className="d-flex flex-column align-items-center">
+
+          <h1 className="mt-2">Country selector</h1>
+          {this.buttonRender()}
+          {this.cardRender()}
+
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" />
+          
+        </div>
+
+
       </div>
     )
   }
