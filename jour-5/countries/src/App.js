@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Button from "./components/Button";
 import Card from "./components/Card";
+import Search from "./components/Search";
 
 class App extends React.Component {
 
@@ -10,14 +11,16 @@ class App extends React.Component {
     super()
 
     this.state = {
-      name: "",
-      capital: "",
-      flag: "",
-      population: "",
-      region: ""
+      countries: [],
+
+      inputCatching: "",
+      found: true
     }
 
-    this.getCountry = this.getCountry.bind(this)
+
+    this.catchInput = this.catchInput.bind(this);
+    this.getCountry = this.getCountry.bind(this);
+    this.searchCountry = this.searchCountry.bind(this);
   }
 
   getCountry(country) {
@@ -36,7 +39,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch("https://restcountries.eu/rest/v2/name/france")
+    fetch("http://localhost:8000/countries/france")
       .then(res => res.json())
       .then(result => {
         console.log(result)
@@ -52,6 +55,65 @@ class App extends React.Component {
       )
   }
 
+  catchInput(e) {
+
+    this.setState({
+      inputCatching: e.target.value
+    })
+
+  }
+
+  searchCountry() {
+    fetch(`http://localhost:8000/countries`)
+      .then(res => res.json())
+      .then(result => {
+        const input = this.state.inputCatching.toUpperCase()
+
+        const arrayFilter = result.filter((country) => {
+          let selected = true;
+          let nameCountry = country.name.toUpperCase().split(" ")
+
+          // for (let i = 0; i < input.length; i++) {
+          if (nameCountry.indexOf(input) === -1) {
+            selected = false
+          }
+          // }
+
+          return selected
+        })
+        
+        console.log('arrayFilter:', arrayFilter);
+        
+        const arraySearch = arrayFilter.map((elem) => {
+          return (
+            {
+              name: elem.name,
+              capital: elem.capital,
+              flag: elem.flag,
+              population: elem.population,
+              region: elem.region
+            }
+          )
+        })
+       
+        console.log('arraySearch:', arraySearch)
+        
+        if (arraySearch.length === 0) {
+          this.setState({
+            found: false
+          })
+        } else {
+
+          this.setState({
+            countries: arraySearch,
+            found: true
+          })
+        }
+      })
+
+
+  }
+
   buttonRender() {
 
     return (
@@ -63,13 +125,37 @@ class App extends React.Component {
     )
   }
 
-  cardRender() {
+  searchRender() {
 
     return (
-      <div>
-        <Card name={this.state.name} capital={this.state.capital} flag={this.state.flag} population={this.state.population} region={this.state.region} />
+      <div style={{ width: 350 }} className="d-flex justify-content-between mb-4 mt-4">
+        <Search funcToCatch={this.catchInput} onClick={this.searchCountry} />
       </div>
     )
+  }
+
+  cardRender() {
+    if (this.state.countries.length === 0 && this.state.found) {
+      return (
+        <></>
+      )
+    } else if (!this.state.found) {
+      return (
+        <div className="d-flex flex-wrap justify-content-center">
+          Not found !
+        </div>
+      )
+    } else {
+      return (
+        <div className="d-flex flex-wrap justify-content-center">
+
+          {this.state.countries.map(country => {
+            return <Card name={country.name} capital={country.capital} flag={country.flag} population={country.population} region={country.region}></Card>
+          })}
+
+        </div>
+      )
+    }
   }
 
   render() {
@@ -80,16 +166,10 @@ class App extends React.Component {
         <div className="d-flex flex-column align-items-center">
 
           <h1 className="mt-2">Country selector</h1>
-          {this.buttonRender()}
+          {this.searchRender()}
           {this.cardRender()}
 
         </div>
-
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" />
-          
-        </div>
-
 
       </div>
     )

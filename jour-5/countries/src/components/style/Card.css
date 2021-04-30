@@ -1,0 +1,27 @@
+.card {
+    padding: 20px;
+    background: rgba(255, 227, 7, 0.67);
+    border-radius: 8px;
+    box-shadow: rgb(0 0 0 / 11%) 0px 0px 8px 1px;
+    width: 200px;
+}
+
+.card img {
+    width: 120px;
+    height: 85px;
+    border-radius: 8px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 0px 8px 0.5px;
+}
+
+.capital {
+    font-weight: 600;
+    font-size: 19px;
+}
+
+.text {
+    font-size: 18px;
+}
+
+.icon-people {
+    font-size: 20px;
+}
