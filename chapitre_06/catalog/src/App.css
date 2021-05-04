@@ -1,0 +1,22 @@
+#root {
+    display: flex;
+    justify-content: center;
+}
+
+nav img {
+    width: 10%;
+}
+.firstPage {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2px
+}
+
