@@ -37,7 +37,7 @@ class App extends React.Component {
             return (
               <div className="box">
                 <img src={movie.image}></img>
-                <h3><Link to={`/${movie.id}`}>{movie.title}</Link></h3>
+                <span><Link to={`/${movie.id}`}>{movie.title}</Link></span>
               </div>
             )
           })}

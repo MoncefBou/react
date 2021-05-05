@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './style/MoviePage.css';
 
 class MoviePage extends React.Component {
 
