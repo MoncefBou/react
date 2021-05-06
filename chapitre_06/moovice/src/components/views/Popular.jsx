@@ -11,6 +11,8 @@ class Popular extends React.Component {
             movies: [],
             page: 1
         }
+
+        this.loadScroll = this.loadScroll.bind(this);
     }
 
     componentDidMount() {
@@ -22,35 +24,39 @@ class Popular extends React.Component {
                 })
             })
 
-        window.addEventListener('scroll', function (e) {
-            if ((e.target.scrollingElement.scrollHeight - e.target.scrollingElement.scrollTop) === e.target.scrollingElement.clientHeight) {
-                component.forceUpdate(callback)
-            }
-        })
+        window.addEventListener('scroll', (e) => this.loadScroll(e))
     }
 
-    componentDidUpdate() {
-        let currentPage = this.state.page || 1
-        let newPage = currentPage + 1
-        fetch("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=bf01af8f5d704591a09edcc0c2f5e084" + "&page=" + newPage)
-            .then(res => res.json())
-            .then(response => {
+    componentWillUnmount() {
+        window.removeEventListener('scroll',(e) => this.loadScroll(e));
+    }
 
-                const allMovies = this.state.movies
-                allMovies.push(response.results)
+    loadScroll(e) {
+        if ((e.target.scrollingElement.scrollHeight - e.target.scrollingElement.scrollTop) === e.target.scrollingElement.clientHeight) {
 
-                this.setState({
-                    movies: allMovies,
-                    page: this.state.page + 1
+            let currentPage = this.state.page
+            let newPage = currentPage + 1
+            fetch("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=bf01af8f5d704591a09edcc0c2f5e084" + "&page=" + newPage)
+                .then(res => res.json())
+                .then(response => {
+
+                    const allMovies = this.state.movies.concat(response.results)
+
+                    console.log(allMovies);
+                    this.setState({
+                        movies: allMovies,
+                        page: this.state.page + 1
+                    })
                 })
-            })
+        }
     }
+
+
 
     render() {
 
-
         return (
-            <div>
+            <div onScroll={(e) => console.log("we")}>
                 <h1>Popular</h1>
 
                 <div>

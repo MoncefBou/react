@@ -25,7 +25,6 @@ class App extends React.Component {
       })
   }
 
-
   render() {
 
     return (
@@ -55,6 +54,7 @@ class App extends React.Component {
                   stars={movie.stars} />} />
             })}
           </Switch>
+          
         </div>
       </BrowserRouter>
     )

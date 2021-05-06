@@ -10,7 +10,7 @@ class MoviePage extends React.Component {
                 <img src={this.props.image}></img>
                 <h2>{this.props.title}</h2>
                 <span>Director : {this.props.director}</span>
-                <span>Stars : {this.props.stars}</span>
+                <span>Stars : {this.props.stars.map(actor=><li>{actor}</li>)}</span>
                 <p>Description : {this.props.description}</p>
             </div>
         )
