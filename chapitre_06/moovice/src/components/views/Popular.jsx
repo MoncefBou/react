@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../Card';
+import { getPopularMovies } from '../../utils/Api';
 
 
 class Popular extends React.Component {
@@ -16,19 +17,26 @@ class Popular extends React.Component {
     }
 
     componentDidMount() {
-        fetch("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=bf01af8f5d704591a09edcc0c2f5e084")
-            .then(res => res.json())
-            .then(response => {
-                this.setState({
-                    movies: response.results
-                })
+        // fetch("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=bf01af8f5d704591a09edcc0c2f5e084")
+        //     .then(res => res.json())
+        //     .then(response => {
+        //         this.setState({
+        //             movies: response.results
+        //         })
+        //     })
+
+        getPopularMovies()
+        .then(res => {
+            this.setState({
+                movies: res
             })
+        })
 
         window.addEventListener('scroll', (e) => this.loadScroll(e))
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll',(e) => this.loadScroll(e));
+        window.removeEventListener('scroll', (e) => this.loadScroll(e));
     }
 
     loadScroll(e) {
@@ -42,7 +50,6 @@ class Popular extends React.Component {
 
                     const allMovies = this.state.movies.concat(response.results)
 
-                    console.log(allMovies);
                     this.setState({
                         movies: allMovies,
                         page: this.state.page + 1
@@ -56,7 +63,7 @@ class Popular extends React.Component {
     render() {
 
         return (
-            <div onScroll={(e) => console.log("we")}>
+            <div>
                 <h1>Popular</h1>
 
                 <div>

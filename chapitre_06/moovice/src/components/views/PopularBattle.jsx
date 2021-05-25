@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../Card';
+import { getPopularMovies } from '../../utils/Api';
 
 
 class PopularBattle extends React.Component {
@@ -14,29 +15,38 @@ class PopularBattle extends React.Component {
     }
 
     componentDidMount() {
-        fetch("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=bf01af8f5d704591a09edcc0c2f5e084")
-            .then(res => res.json())
-            .then(response => {
-                this.setState({
-                    movies: response.results
-                })
-                console.log('wewe')
+        // fetch("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=bf01af8f5d704591a09edcc0c2f5e084")
+        //     .then(res => res.json())
+        //     .then(response => {
+        //         this.setState({
+        //             movies: response.results
+        //         })
+        //     })
+
+        getPopularMovies()
+        .then(res => {
+            this.setState({
+                movies: res
             })
+        })
     }
 
 
     choose(indexOfMovie) {
-
+        
         const newFavorite = JSON.parse(localStorage.getItem("favorites")) || [];
-        newFavorite.push(this.state.movies[indexOfMovie].id);
 
-        localStorage.setItem("favorites", JSON.stringify(newFavorite));
+        if (newFavorite.indexOf(this.state.movies[indexOfMovie].id) === -1  ) {
 
-        this.setState({
-            currentBattle: this.state.currentBattle + 2
-        })
-
-        console.log(localStorage.getItem("favorites"))
+            newFavorite.push(this.state.movies[indexOfMovie].id);
+            
+            localStorage.setItem("favorites", JSON.stringify(newFavorite));
+        }
+            
+            this.setState({
+                currentBattle: this.state.currentBattle + 2
+            })
+            
     }
 
     render() {
