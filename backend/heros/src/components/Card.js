@@ -10,7 +10,7 @@ function Card(props) {
             <span>Âge: {props.age}</span>
             <span >{props.isAlive ? "Live" : "Dead"}</span>
             <ul>
-                Power : {props.power.map(elem => <li>{elem}</li>)}
+                Power : {props.power.map((elem, index) => <li key={index}>{elem}</li>)}
             </ul>
         </div>
     )

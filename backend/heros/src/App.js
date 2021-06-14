@@ -18,39 +18,44 @@ function App() {
 
   const searchHero = () => {
     fetch(`http://localhost:8000/heroes/${valueInput}`)
-    .then(res => res.json())
-    .then( data => {
-      if (data.message !== undefined) {
-        setHeroes([])
-      } else {
-        const newArray = [];
-
-        newArray.push(data)
-
-        setHeroes(newArray)
-      }
-    }) 
+      .then(res => res.json())
+      .then(data => {
+        console.log("la data", data)
+        if (data[0].name !== undefined) {
+          const newArray = [];
+          
+          newArray.push(data[0])
+          
+          setHeroes(newArray)
+        } else {
+          setHeroes([])
+        }
+      })
   }
 
   const funcValueInput = (e) => {
+    console.log(e.target.value)
     setValueInput(e.target.value)
   }
 
 
   if (heroes !== null) {
+   
+   console.log("je me relance !!!")
     return (
       <div className="app">
 
         <h1>Heroes App</h1>
         <div className="search">
-          <label for="search">Search a hero</label>
+          <label>Search a hero</label>
           <input onChange={(e) => funcValueInput(e)} type="text" name="search"></input>
           <button onClick={searchHero}>Search</button>
         </div>
 
         <div className="allCards">
-          {heroes.map(elem => {
+          {heroes.map((elem, index) => {
             return <Card
+              key={index}
               name={elem.name}
               power={elem.power}
               color={elem.color}
