@@ -41,7 +41,6 @@ function App() {
 
   if (heroes !== null) {
    
-   console.log("je me relance !!!")
     return (
       <div className="app">
 

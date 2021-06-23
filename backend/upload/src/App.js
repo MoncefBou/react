@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import fetch from 'fetch'
 import './App.css';
 
 function App() {
@@ -10,6 +9,7 @@ function App() {
   const sendData = () => {
     const formData = new FormData();
     formData.append("image", image);
+
     fetch("http://localhost:8000/upload", {
       method: "POST",
       body: formData,
